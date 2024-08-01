@@ -32,7 +32,7 @@
     },
     "storageAccount": {
       "type": "string",
-      "defaultValue": "[concat(toLower(parameters('baseName')), 'amlsa')]"
+      "defaultValue": "[concat(toLower(parameters('baseName')), 'amlsa1')]"
     },
     "keyvault": {
       "type": "string",
@@ -44,7 +44,7 @@
     },
     "acr": {
       "type": "string",
-      "defaultValue": "[concat(toLower(parameters('baseName')),'amlcr')]"
+      "defaultValue": "[concat(toLower(parameters('baseName')),'amlcr1')]"
     },
     "sku": {
       "type": "string",
