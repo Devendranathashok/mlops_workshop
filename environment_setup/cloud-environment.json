@@ -36,11 +36,11 @@
     },
     "keyvault": {
       "type": "string",
-      "defaultValue": "[concat(parameters('baseName'),'-AML-KV')]"
+      "defaultValue": "[concat(parameters('baseName'),'AMLKV')]"
     },
     "appInsights": {
       "type": "string",
-      "defaultValue": "[concat(parameters('baseName'),'-AML-AI')]"
+      "defaultValue": "[concat(parameters('baseName'),'AMLAI')]"
     },
     "acr": {
       "type": "string",
