@@ -23,6 +23,7 @@ dependencies:
 
   - pip:
       # Base AzureML SDK
+      - azureml-inference-server-http==0.8.4.2
       - azureml-sdk
 
       # Must match AzureML SDK version.
