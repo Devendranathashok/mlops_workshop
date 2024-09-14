@@ -2,15 +2,13 @@ import numpy as np
 import pandas as pd
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
-import lightgbm
+import lightgbm as lgb
 
 def preprocess_data(data_df):
     """Preprocess the DataFrame to handle categorical features"""
-    # Identify categorical features
-    categorical_features = data_df.select_dtypes(include=['object']).columns
-    
-    # Apply one-hot encoding to categorical features
-    data_df = pd.get_dummies(data_df, columns=categorical_features)
+    # Convert categorical columns to 'category' dtype
+    for col in data_df.select_dtypes(include=['object']).columns:
+        data_df[col] = data_df[col].astype('category')
 
     return data_df
 
@@ -19,11 +17,14 @@ def split_data(data_df):
     """Split a dataframe into training and validation datasets"""
     features = data_df.drop(['target', 'id'], axis=1)
     labels = np.array(data_df['target'])
+
     features_train, features_valid, labels_train, labels_valid = \
         train_test_split(features, labels, test_size=0.2, random_state=0)
 
-    train_data = lightgbm.Dataset(features_train, label=labels_train)
-    valid_data = lightgbm.Dataset(features_valid, label=labels_valid, free_raw_data=False)
+    categorical_features = list(features.select_dtypes(['category']).columns)
+
+    train_data = lgb.Dataset(features_train, label=labels_train, categorical_feature=categorical_features)
+    valid_data = lgb.Dataset(features_valid, label=labels_valid, categorical_feature=categorical_features, free_raw_data=False)
 
     return (train_data, valid_data)
 
@@ -33,11 +34,10 @@ def train_model(data, parameters):
     train_data = data[0]
     valid_data = data[1]
 
-    model = lightgbm.train(parameters,
-                           train_data,
-                           valid_sets=valid_data,
-                           num_boost_round=500
-                          )
+    model = lgb.train(parameters,
+                      train_data,
+                      valid_sets=valid_data,
+                      num_boost_round=500)
 
     return model
 
