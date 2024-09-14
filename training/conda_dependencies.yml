@@ -18,7 +18,7 @@ name: amlproj06_training_env
 dependencies:
   # The python interpreter version.
   # Currently Azure ML Workbench only supports 3.5.2 and later.
-  - python=3.7.*
+  - python=3.8.*
   - pip=20.2.4
 
   - pip:
@@ -41,6 +41,7 @@ dependencies:
 
       # LightGBM bosting lib
       - lightgbm
+      - PySocks
 
       # lightgbm Caps because we are throwing darts
       - LightGBM
